@@ -17,7 +17,7 @@ namespace MySalesAB
                                                                                                                                 //mot databasen. Där är det samma kommando som vi skriver in i query, sen bifogar vi vår connection som vi anropat.
                     {
                         command.Parameters.AddWithValue("@CustomerId", customerToDelete); //Här skapar vi en parameter för @CustomerId för att kunna styra det med tex ReadLine input lite enklare.
-                        int affecteRows = command.ExecuteNonQuery(); //Vi i en int antalet rader som vi deletat med kommandot ExecuteNonQuery för att se vad vårt command precis gjorde.
+                        int affecteRows = command.ExecuteNonQuery(); //Vi sparar i en int, det antalet rader som vi deletat med kommandot ExecuteNonQuery för att se vad vårt command precis gjorde.
                         if (affecteRows > 0)
                         {
                             Console.WriteLine("Antal rader: " + affecteRows);
