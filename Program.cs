@@ -9,10 +9,7 @@ namespace MySalesAB
 
         static void Main(string[] args)
         {
-            //InsertNewCustomer(connectionString);
-
-            
-            //string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MySales;Trusted_Connection=True;MultipleActiveResultSets=True"; //Vi sparar en sträng som connection väg till databasen
+           
             int customerToDelete = 4; //Här sätter vi vilket värde vi vill att CustomerID't som vi ska radera har 
             try
             {
