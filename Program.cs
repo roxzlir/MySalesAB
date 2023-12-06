@@ -1,13 +1,19 @@
 ﻿using System.Data.SqlClient;
+using System.Threading.Channels;
 
 namespace MySalesAB
 {
     internal class Program
     {
+        public static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MySales;Trusted_Connection=True;MultipleActiveResultSets=True";
+
         static void Main(string[] args)
         {
-            string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MySales;Trusted_Connection=True;MultipleActiveResultSets=True"; //Vi sparar en sträng som connection väg till databasen
-            int customerToDelete = 4; //Här sätter vi vilket värde vi vill tilldela CustomerId nedan
+            //InsertNewCustomer(connectionString);
+
+            
+            //string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MySales;Trusted_Connection=True;MultipleActiveResultSets=True"; //Vi sparar en sträng som connection väg till databasen
+            int customerToDelete = 4; //Här sätter vi vilket värde vi vill att CustomerID't som vi ska radera har 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString)) //Vi ansluter till databasen genom att göra en ny SqlConnection och skickar med vår sträng med vägen in till den.
@@ -33,6 +39,39 @@ namespace MySalesAB
             {
                 Console.WriteLine("no");
                 throw;
+            }
+
+            InsertNewCustomer(connectionString);
+
+            static void InsertNewCustomer(string connectionString)
+            {
+                Console.Write("Enter customer name: ");
+                string name = Console.ReadLine();
+                Console.Write("Enter customer zip: ");
+                string zip = Console.ReadLine();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sql = $"INSERT INTO Customer (CustomerName, CustomerZip) VALUES (@Name, @Zip)";
+
+                    using (SqlCommand cmd = new SqlCommand(sql,connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        cmd.Parameters.AddWithValue("@Zip", zip);
+
+                        connection.Open();
+                        int result = cmd.ExecuteNonQuery();
+                        if (result < 1)
+                        {
+                            Console.WriteLine("No added data");
+                        }
+                        else
+                        {
+                            Console.WriteLine(result + " customer have been added");
+                        }
+                    }
+                }
+
             }
         }
     }
